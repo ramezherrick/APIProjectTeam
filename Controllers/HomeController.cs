@@ -12,6 +12,7 @@ namespace APIProject.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly MovieDAL _movieDal;
         //for hiding apikey
         private readonly string _apiKey;
@@ -23,22 +24,32 @@ namespace APIProject.Controllers
             _movieDal = new MovieDAL(_apiKey);
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
         {
-            var movie = await _movieDal.GetMovie();
-            return View(movie);
+            return View();
         }
 
         public IActionResult SearchPage()
         {
-            //var userMovie = await _movieDal.GetSearch("1917");
+            //var userMovie = await _movieDal.GetSearch();
             return View();
         }
 
-        public async Task<IActionResult> SearchResults()
+        public async Task<IActionResult> SearchResults(string name)
         {
-            var userMovie = await _movieDal.GetSearch("Fight+Club");
+            List<Result> userMovie = await _movieDal.GetSearch(name);
             return View(userMovie);
+        }
+
+        public async Task<IActionResult> AddToFavorites(int id)
+        {
+            Result userFavorite = await _movieDal.GetMovie(id);
+
+            FavoriteMovies x = new FavoriteMovies();
+
+            //x.AddToFavorites(userFavorite);
+
+            return View(x.AddToFavorites(userFavorite));
         }
 
         //public IActionResult FavoritesPage()

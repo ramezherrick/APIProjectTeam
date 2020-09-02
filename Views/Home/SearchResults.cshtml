@@ -5,6 +5,26 @@
 
 <h1>SearchResults</h1>
 
-@model MovieAPIModel
+@model List<Result>
 
-@*<h2>@Model.title</h2>*@
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Release Date</th>
+        <th>Poster Path</th>
+        <th>Favorites</th>
+    </tr>
+
+    @foreach (Result r in Model)
+    {
+<tr>
+
+    <td>@r.title</td">
+    <td>@r.release_date</td">
+    <td>@r.poster_path</td">
+    <td class="btn">
+     <a href="../Home/AddToFavorites?id=@r.id">Add Movie to Favorites!</a>
+</tr>
+    }
+
+</table>

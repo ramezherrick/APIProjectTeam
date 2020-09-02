@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace APIProject.Models
 {
-
-    public class MovieAPIModel
+    public class Rootobject
     {
         public int page { get; set; }
         public int total_results { get; set; }
