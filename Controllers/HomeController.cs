@@ -6,21 +6,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using APIProject.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace APIProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly MovieDAL _movieDal;
+        //for hiding apikey
+        private readonly string _apiKey;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IConfiguration configuration)
         {
-            _logger = logger;
+            //for hiding api key
+            _apiKey = configuration.GetSection("ApiKeys")["MovieAPIkey"];
+            _movieDal = new MovieDAL(_apiKey);
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            var movie = await _movieDal.GetMovie();
+            return View(movie);
         }
 
         public IActionResult Privacy()
