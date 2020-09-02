@@ -29,6 +29,23 @@ namespace APIProject.Controllers
             return View(movie);
         }
 
+        public IActionResult SearchPage()
+        {
+            //var userMovie = await _movieDal.GetSearch("1917");
+            return View();
+        }
+
+        public async Task<IActionResult> SearchResults()
+        {
+            var userMovie = await _movieDal.GetSearch("Fight+Club");
+            return View(userMovie);
+        }
+
+        //public IActionResult FavoritesPage()
+        //{
+        //    return View();
+        //}
+
         public IActionResult Privacy()
         {
             return View();

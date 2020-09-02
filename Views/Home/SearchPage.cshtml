@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "SearchPageAsync";
+}
+
+<h1>SearchPageAsync</h1>
+
+@model MovieAPIModel
+
+<form action="../Home/SearchResults" method="post">
+
+    <input type="text" name="name" placeholder="Put Movie Here..." />
+    <input type="submit" />
+</form>
