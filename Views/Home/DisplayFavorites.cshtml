@@ -14,21 +14,28 @@
         border: 1px solid #dddddd;
         text-align: center;
         padding: 8px;
+        font-size: x-large;
     }
 
     td {
         border: 1px solid #dddddd;
         text-align: left;
         padding: 8px;
+        font-size: large;
     }
 
     tr:nth-child(even) {
         background-color: #dddddd;
     }
+    button {
+        
+    }
+
+
 </style>
 
 
-<h1>DisplayFavorites</h1>
+<h1>Your Favorite Movies!</h1>
 @model List<Favorite>
 
 <table>
@@ -42,13 +49,15 @@
 
     @foreach (Favorite f in Model)
     {
-        <tr>
-            @*remove duplicates*@
-            <td>@f.Title</td>
-            <td>@f.ReleaseDate</td>
-            <td><img src="https://image.tmdb.org/t/p/w500/@f.PosterPath" style="width:50%;height:50%" alt="img" /></td>
-            <td><a href="../Home/DeleteFavorite?id=@f.Id">Delete Favorite</a></td>
-        </tr>
+<tr>
+    @*remove duplicates*@
+    <td>@f.Title</td>
+    <td>@f.ReleaseDate</td>
+
+     <td><center><img src="https://image.tmdb.org/t/p/w500/@f.PosterPath" style="width:33%;height:33%" alt="The nargle's must have gotten to the movie poster..." /></center></td>
+
+    <td><a href="../Home/DeleteFavorite?id=@f.Id">Delete Favorite</a></td>
+</tr>
 
     }
     

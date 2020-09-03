@@ -35,7 +35,7 @@
     <tr>
         <th>Title</th>
         <th>Release Date</th>
-        <th>Poster Path</th>
+        <th>Movie Poster</th>
         <th>Details</th>
         <th>Favorites</th>
     </tr>
@@ -46,9 +46,9 @@
 
     <td>@r.title</td>
     <td>@r.release_date</td>
-    <td><img src="https://image.tmdb.org/t/p/w500/@r.poster_path" style="width:400px;height:500px" alt="img" /></td>
-    <td class="btn"><a href="../Home/MovieDetails?id=@r.id">Watch Video</a>
-<td class="btn"><a href="../Home/AddToFavorites?id=@r.id">Add to favorites</a>
+    <td><center><img src="https://image.tmdb.org/t/p/w500/@r.poster_path" style="width:33%;height:33%" alt="The nargle's must have gotten to the movie poster..." /></center></td>
+    <td><a href="../Home/MovieDetails?id=@r.id">Watch a Trailer</a>
+    <td><a href="../Home/AddToFavorites?id=@r.id">Add to favorites</a>
 </tr>
     }
 
