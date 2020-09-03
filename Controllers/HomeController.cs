@@ -41,21 +41,9 @@ namespace APIProject.Controllers
             return View(userMovie);
         }
 
-        public async Task<IActionResult> AddToFavorites(int id)
-        {
-            Result userFavorite = await _movieDal.GetMovie(id);
 
-            FavoriteMovies x = new FavoriteMovies();
 
-            //x.AddToFavorites(userFavorite);
-
-            return View(x.AddToFavorites(userFavorite));
-        }
-
-        //public IActionResult FavoritesPage()
-        //{
-        //    return View();
-        //}
+  
 
         public IActionResult Privacy()
         {
