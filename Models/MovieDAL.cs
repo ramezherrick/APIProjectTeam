@@ -57,5 +57,15 @@ namespace APIProject.Models
 
             return movieResult;
         }
+        public async Task<Video> GetVideo(int id)
+        {
+            var client = GetClient();//give api general information to receive data from api
+            var response = await client.GetAsync($"/3/movie/{id}/videos?api_key={_apikey}"); //use client (Httpclient) to receive data from api based of certain endpoint
+            var JSON = await response.Content.ReadAsStringAsync();
+
+            Video video= await response.Content.ReadAsAsync<Video>();
+
+            return video;
+        }
     }
 }

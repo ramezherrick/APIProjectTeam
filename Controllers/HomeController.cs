@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using APIProject.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace APIProject.Controllers
 {
@@ -15,6 +16,7 @@ namespace APIProject.Controllers
         private readonly FavoriteDbContext _context;
 
         private readonly MovieDAL _movieDal;
+
         //for hiding apikey
         private readonly string _apiKey;
 
@@ -53,6 +55,7 @@ namespace APIProject.Controllers
                 f.Title = foundMovie.title;
                 f.PosterPath = foundMovie.poster_path;
                 f.ReleaseDate = foundMovie.release_date;
+                f.UserId = FindUserId();
                 _context.Favorite.Add(f);
 
                 _context.SaveChanges();
@@ -60,20 +63,41 @@ namespace APIProject.Controllers
 
             return RedirectToAction("DisplayFavorites");
         }
+        public IActionResult DeleteFavorite(int id)
+        {
+            var foundMovie = _context.Favorite.Find(id);
+
+            if (foundMovie != null)
+            {
+                _context.Favorite.Remove(foundMovie);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("DisplayFavorites");
+        }
+        [Authorize]
         public IActionResult DisplayFavorites()
         {
-            var favList = _context.Favorite.ToList();
+            string id = FindUserId();
+
+            //put current users favorite 
+            var favList = _context.Favorite.Where(x => x.UserId == id).ToList();
+
 
             return View(favList);
         }
-
-
-
-
-
-        public IActionResult Privacy()
+        //this is a method to make stephen happy
+        public string FindUserId()
         {
-            return View();
+            return _context.AspNetUsers.Where(s => s.UserName == User.Identity.Name).FirstOrDefault().Id;
+        }
+        public async Task<IActionResult> MovieDetailsAsync(int id)
+        {
+           // Result foundMovie = await _movieDal.GetMovie(id);
+
+            Video video = await _movieDal.GetVideo(id);
+
+            return View(video);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

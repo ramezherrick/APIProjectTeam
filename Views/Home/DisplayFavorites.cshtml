@@ -3,6 +3,31 @@
     ViewData["Title"] = "DisplayFavorites";
 }
 
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+    }
+
+    td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+
 <h1>DisplayFavorites</h1>
 @model List<Favorite>
 
@@ -12,6 +37,7 @@
         <th>Title</th>
         <th>Release Date</th>
         <th>Poster Path</th>
+        <th>Delete</th>
     </tr>
 
     @foreach (Favorite f in Model)
@@ -20,8 +46,11 @@
             @*remove duplicates*@
             <td>@f.Title</td>
             <td>@f.ReleaseDate</td>
-            <td>@f.PosterPath</td>
+            <td><img src="https://image.tmdb.org/t/p/w500/@f.PosterPath" style="width:50%;height:50%" alt="img" /></td>
+            <td><a href="../Home/DeleteFavorite?id=@f.Id">Delete Favorite</a></td>
         </tr>
+
     }
+    
 
 </table>

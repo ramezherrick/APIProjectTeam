@@ -154,7 +154,7 @@ namespace APIProject.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Favorite)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Favorite__UserId__4BAC3F29");
+                    .HasConstraintName("FK__Favorite__UserId__4E88ABD4");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -1,30 +1,54 @@
 ﻿
 @{
-    ViewData["Title"] = "SearchResults";
+    ViewData["Title"] = "Results";
 }
 
-<h1>SearchResults</h1>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+    }
+
+    td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<h1>Results</h1>
 
 @model List<Result>
 
 <table>
     <tr>
-        <th>Movie ID</th>
         <th>Title</th>
         <th>Release Date</th>
         <th>Poster Path</th>
+        <th>Details</th>
         <th>Favorites</th>
     </tr>
 
     @foreach (Result r in Model)
     {
 <tr>
-    <td>@r.id</td>
+
     <td>@r.title</td>
     <td>@r.release_date</td>
-    <td><img src="https://image.tmdb.org/t/p/w500/@r.poster_path" style="width:50%;height:50%" alt="img"/></td>
-    <td class="btn">
-     <a href="../Home/AddToFavorites?id=@r.id">Add Movie to Favorites!</a>
+    <td><img src="https://image.tmdb.org/t/p/w500/@r.poster_path" style="width:50%;height:50%" alt="img" /></td>
+    <td class="btn"><a href="../Home/MovieDetails?id=@r.id">Watch Video</a>
+<td class="btn"><a href="../Home/AddToFavorites?id=@r.id">Add to favorites</a>
 </tr>
     }
 
