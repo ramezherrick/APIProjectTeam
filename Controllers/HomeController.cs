@@ -12,16 +12,18 @@ namespace APIProject.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly FavoriteDbContext _context;
 
         private readonly MovieDAL _movieDal;
         //for hiding apikey
         private readonly string _apiKey;
 
-        public HomeController(IConfiguration configuration)
+        public HomeController(IConfiguration configuration, FavoriteDbContext context)
         {
             //for hiding api key
             _apiKey = configuration.GetSection("ApiKeys")["MovieAPIkey"];
             _movieDal = new MovieDAL(_apiKey);
+            _context = context;
         }
 
         public IActionResult Index()
@@ -40,10 +42,34 @@ namespace APIProject.Controllers
             List<Result> userMovie = await _movieDal.GetSearch(name);
             return View(userMovie);
         }
+        public async Task<IActionResult> AddToFavoritesAsync (int id)
+        {
+            Result foundMovie = await _movieDal.GetMovie(id);
+
+            if (foundMovie != null)
+            {
+                Favorite f = new Favorite();
+                //f.Id = foundMovie.id;
+                f.Title = foundMovie.title;
+                f.PosterPath = foundMovie.poster_path;
+                f.ReleaseDate = foundMovie.release_date;
+                _context.Favorite.Add(f);
+
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("DisplayFavorites");
+        }
+        public IActionResult DisplayFavorites()
+        {
+            var favList = _context.Favorite.ToList();
+
+            return View(favList);
+        }
 
 
 
-  
+
 
         public IActionResult Privacy()
         {
