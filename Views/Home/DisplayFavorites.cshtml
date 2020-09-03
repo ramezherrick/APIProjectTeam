@@ -37,6 +37,7 @@
         <th>Title</th>
         <th>Release Date</th>
         <th>Poster Path</th>
+        <th>Delete</th>
     </tr>
 
     @foreach (Favorite f in Model)
@@ -45,8 +46,11 @@
             @*remove duplicates*@
             <td>@f.Title</td>
             <td>@f.ReleaseDate</td>
-            <td>@f.PosterPath</td>
+            <td><img src="https://image.tmdb.org/t/p/w500/@f.PosterPath" style="width:50%;height:50%" alt="img" /></td>
+            <td><a href="../Home/DeleteFavorite?id=@f.Id">Delete Favorite</a></td>
         </tr>
+
     }
+    
 
 </table>
