@@ -17,14 +17,15 @@ namespace APIProject.Controllers
 
         private readonly MovieDAL _movieDal;
 
-        //for hiding apikey
+        //For hiding APIkey
         private readonly string _apiKey;
 
         public HomeController(IConfiguration configuration, FavoriteDbContext context)
         {
-            //for hiding api key
+            //For hiding APIkey
             _apiKey = configuration.GetSection("ApiKeys")["MovieAPIkey"];
             _movieDal = new MovieDAL(_apiKey);
+
             _context = context;
         }
 
@@ -35,15 +36,17 @@ namespace APIProject.Controllers
 
         public IActionResult SearchPage()
         {
-            //var userMovie = await _movieDal.GetSearch();
             return View();
         }
 
+        //Grabbing movies from the API and passing it to the view
         public async Task<IActionResult> SearchResults(string name)
         {
             List<Result> userMovie = await _movieDal.GetSearch(name);
             return View(userMovie);
         }
+
+        //Gets a movie from the API and saves it to SQL
         public async Task<IActionResult> AddToFavoritesAsync (int id)
         {
             Result foundMovie = await _movieDal.GetMovie(id);
@@ -51,7 +54,7 @@ namespace APIProject.Controllers
             if (foundMovie != null)
             {
                 Favorite f = new Favorite();
-                //f.Id = foundMovie.id;
+               
                 f.Title = foundMovie.title;
                 f.PosterPath = foundMovie.poster_path;
                 f.ReleaseDate = foundMovie.release_date;
@@ -63,6 +66,8 @@ namespace APIProject.Controllers
 
             return RedirectToAction("DisplayFavorites");
         }
+
+        //Deletes a movie from a user's SQL database
         public IActionResult DeleteFavorite(int id)
         {
             var foundMovie = _context.Favorite.Find(id);
@@ -76,16 +81,17 @@ namespace APIProject.Controllers
             return RedirectToAction("DisplayFavorites");
         }
   
+        //Displays a user's favorites
         public IActionResult DisplayFavorites()
         {
             string id = FindUserId();
 
-            //put current users favorite 
+            //Creates list of favorites for the current user
             var favList = _context.Favorite.Where(x => x.UserId == id).ToList();
-
 
             return View(favList);
         }
+
         //this is a method to make stephen happy
         public string FindUserId()
         {
@@ -99,9 +105,10 @@ namespace APIProject.Controllers
             }
             
         }
+
+        //Grabs a video from Youtube to show to the user
         public async Task<IActionResult> MovieDetailsAsync(int id)
         {
-           // Result foundMovie = await _movieDal.GetMovie(id);
 
            Videoobject video = await _movieDal.GetVideo(id);
 
