@@ -5,26 +5,8 @@
 
 <h1>MovieDetailsAsync</h1>
 
-@model Video
-
-<table>
-    <tr>
-        <th>Title</th>
-        @*<th>Over View</th>*@
-        <th>Poster</th>
-        <th>Release Date</th>
-        <th>Watch Video</th>
-        <th>Favorites</th>
-    </tr>
-    <tr>
-
-        <td>@Model.name</td>
-        @*<td>@Model.overview</td>*@
-        @*<td><img src="https://image.tmdb.org/t/p/w500/@Model.poster_path" style="width:50%;height:50%" alt="img" /></td>*@
-        <td class="btn"><a href="https://www.youtube.com/watch?v=@Model.key">Watch On Youtube</a>
-        @*<td class="btn"><a href="../Home/AddToFavorites?id=@r.id">Add!</a>*@
-    </tr>
+@model Videoobject
 
 
-</table>
+        <iframe id="ytplayer" type="text/html" width="1280" height="720" src="https://www.youtube.com/embed/@Model.results[0].key?autoplay=1"></iframe>
 

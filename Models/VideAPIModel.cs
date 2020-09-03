@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace APIProject.Models
 {
 
+
     public class Videoobject
     {
         public int id { get; set; }
@@ -23,5 +24,6 @@ namespace APIProject.Models
         public int size { get; set; }
         public string type { get; set; }
     }
+
 
 }

@@ -75,7 +75,7 @@ namespace APIProject.Controllers
 
             return RedirectToAction("DisplayFavorites");
         }
-        [Authorize]
+  
         public IActionResult DisplayFavorites()
         {
             string id = FindUserId();
@@ -89,13 +89,21 @@ namespace APIProject.Controllers
         //this is a method to make stephen happy
         public string FindUserId()
         {
-            return _context.AspNetUsers.Where(s => s.UserName == User.Identity.Name).FirstOrDefault().Id;
+            if (User.Identity.Name == null)
+            {
+                return null;
+            }
+            else
+            {
+                return _context.AspNetUsers.Where(s => s.UserName == User.Identity.Name).FirstOrDefault().Id;
+            }
+            
         }
         public async Task<IActionResult> MovieDetailsAsync(int id)
         {
            // Result foundMovie = await _movieDal.GetMovie(id);
 
-            Video video = await _movieDal.GetVideo(id);
+           Videoobject video = await _movieDal.GetVideo(id);
 
             return View(video);
         }
